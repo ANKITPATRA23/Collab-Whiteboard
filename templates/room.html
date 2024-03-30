@@ -1,13 +1,18 @@
 {% extends 'base.html' %} {% block content %}
 <h2 id="meet">Meet Room: {{ code }}</h2>
 
-<!-- <div class="relative">
-  <button
-  type="button"
-  class="absolute py-2.5 px-5 me-2 mb-2 text-sm font-medium text-red focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
->
-  Leave Room
-</button>
+<div class="top-right-buttons">
+  <form action="{{ url_for('leave_room') }}" method="get">
+    <button type="submit" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Leave Room</button>
+  </form>
+</div>
+
+<!-- <div class="top-right-buttons">
+  <a href="{{ url_for('logout') }}" > <img src="/static/logout.svg" width="36" height="36" alt="edit" class="invert-white"></a
+  ><br />
+  <a href="{{ url_for('forgot_password') }}" 
+    ><button>Reset Password</button></a
+  >
 </div> -->
 
 <div class="message-box">
@@ -24,13 +29,10 @@
       Send
     </button>
   </div>
-
-  <div class="file-upload">
-    <input type="file" id="file-input" class="file-input" />
-    <label for="file-input" class="upload-btn">Choose File</label>
-    <button type="button" id="upload-btn" class="upload-btn">Upload</button>
+  <div>
+    <input type="file" id="file-input" />
+    <button type="button" id="upload-btn">Upload</button>
   </div>
-
   <div id="uploaded-files">
     {% for file in uploaded_files %}
     <button
@@ -55,8 +57,17 @@
       <option value="pen">Pen</option>
       <option value="pencil">Pencil</option>
       <option value="eraser">Eraser</option>
+      <option value="text">Text</option>
+      <option value="circle">Circle</option>
+      <!-- Added Circle option -->
+      <option value="square">Square</option>
+      <!-- Added Square option -->
       <!-- Add more drawing tools as needed -->
     </select>
+    <label>Thickness:</label>
+    <input type="range" id="thickness" min="1" max="20" value="2" />
+    <button id="undoBtn">Undo</button>
+    <button id="redoBtn">Redo</button>
   </div>
 </div>
 <script src="{{ url_for('static', filename='js/whiteboard.js') }}"></script>
@@ -66,13 +77,17 @@
   const messages = document.getElementById("messages");
 
   const createMessage = (name, msg) => {
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
     const content = `
     <div class="text">
         <span>
             <strong>${name}</strong>: ${msg}
         </span>
         <span class="muted">
-            ${new Date().toLocaleString()}
+            ${currentTime}
         </span>
     </div>
     `;
