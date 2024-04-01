@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .content {
   display: flex;
   align-items: center;
@@ -161,32 +162,34 @@ h2 {
 #container {
   position: fixed;
   top: 0;
-  left: 25%;
-  width: 50%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 10px;
   background-color: black;
   color: #fff;
 }
 
+#tools{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+#tools label{
+  margin-right: 10px;
+}
+
+#tools select,
+#tools input[type="range"] {
+  flex: 1; /* Allow these elements to grow and fill available space */
+}
+
 .file-input {
   display: none; /* Hide the file input */
 }
 
-/* Styles for the upload button */
-.upload-btn {
-  background-color: #1174ff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-/* Styles for the file upload container */
 .file-upload {
   display: flex;
   align-items: center;
@@ -200,3 +203,6 @@ h2 {
   display: flex;
   align-items: center;
 }
+
+/* .message-box {
+  display: none; /* Initially hide the message box */
